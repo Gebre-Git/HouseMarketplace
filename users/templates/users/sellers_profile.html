@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ seller.username }}'s Profile</title>
+</head>
+<body>
+    <h1>Listings by {{ seller.username }}</h1>
+
+    {% if listings %}
+        <ul>
+            {% for listing in listings %}
+                <li>
+                    <strong>{{ listing.title }}</strong> - {{ listing.price }} USD
+                    <br>
+                    Type: {{ listing.listing_type }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>This seller has no listings yet.</p>
+    {% endif %}
+
+    <p><a href="{% url 'home' %}">Back to all listings</a></p>
+</body>
+</html>
+    
