@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# cd E:\Projects\HouseMarketplace
-# .\venv\Scripts\Activate.ps1
+# cd E:\Projects\HouseMarketplace 
+#.\venv\Scripts\Activate.ps1
 # python manage.py runserver
 
 
@@ -144,4 +144,7 @@ LOGIN_REDIRECT_URL = 'home'
 
 # Where to redirect after logout
 LOGOUT_REDIRECT_URL = 'home'  
+
+# house_marketplace/settings.py
+LOGIN_URL = 'login'
 

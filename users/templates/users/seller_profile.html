@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ seller.username }}'s Profile - House Marketplace</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      h1 {
+        color: #333;
+      }
+      .seller-info {
+        margin-bottom: 30px;
+      }
+      .seller-info p {
+        font-size: 16px;
+        margin: 5px 0;
+      }
+      .listing {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+      .listing:last-child {
+        border-bottom: none;
+      }
+      .listing strong {
+        font-size: 18px;
+      }
+      .listing img {
+        max-width: 200px;
+        margin-top: 5px;
+        display: block;
+      }
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .back-link {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="back-link">
+        <a href="{% url 'home' %}">&larr; Back to Home</a>
+      </div>
+      <h1>{{ seller.username }}'s Profile</h1>
+
+      <div class="seller-info">
+        {% if user.is_authenticated %}
+        <p><strong>Email:</strong> {{ seller.email }}</p>
+        <p>
+          <p><strong>Phone:</strong> {{ seller.phone_number|default:"Not provided" }}</p>
+        </p>
+        {% else %}
+        <p>
+          <a href="{% url 'login' %}?next={{ request.path }}"
+            >Login to see contact info</a
+          >
+        </p>
+        {% endif %}
+      </div>
+
+      <h2>Listings by {{ seller.username }}</h2>
+      {% if listings %} {% for listing in listings %}
+      <div class="listing">
+        <strong>{{ listing.title }}</strong> - ${{ listing.price }} <br />
+        Type: {{ listing.listing_type }} <br />
+        {% if listing.image %}
+        <img src="{{ listing.image.url }}" alt="{{ listing.title }}" />
+        {% endif %}
+      </div>
+      {% endfor %} {% else %}
+      <p>No listings yet.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

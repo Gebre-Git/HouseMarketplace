@@ -4,8 +4,11 @@ from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
 from .forms import SellerSignUpForm
-from django.contrib.auth.models import User
+from .models import CustomUser
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .forms import SellerSignUpForm, BuyerSignUpForm
+
 
 # Existing seller signup
 def seller_signup(request):
@@ -53,7 +56,24 @@ def logout_view(request):
     logout(request)
     return redirect("home")
 
+@login_required
 def seller_profile(request, seller_id):
-    seller = get_object_or_404(User, id=seller_id)
-    listings = seller.listing_set.all()  # all listings from this seller
+    seller = get_object_or_404(CustomUser, id=seller_id)
+    listings = seller.listing_set.all()
     return render(request, "users/seller_profile.html", {"seller": seller, "listings": listings})
+
+
+def buyer_signup(request):
+    if request.method == "POST":
+        form = BuyerSignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # automatically log them in
+            return redirect("home")
+    else:
+        form = BuyerSignUpForm()
+    return render(request, "users/buyer_signup.html", {"form": form})
+
+
+
+

@@ -15,7 +15,6 @@
                     Type: {{ listing.listing_type }}
                     <br>
                     Seller: <a href="{% url 'seller_profile' listing.seller.id %}">{{ listing.seller.username }}</a>
-
                 </li>
             {% endfor %}
         </ul>
@@ -23,9 +22,10 @@
         <p>No listings yet.</p>
     {% endif %}
 
-    {% if user.is_authenticated %}
+    <!-- Add Listing Button: only for logged-in sellers (agents) -->
+    {% if user.is_authenticated and user.is_agent %}
         <a href="{% url 'add_listing' %}">Add New Listing</a>
-    {% else %}
+    {% elif not user.is_authenticated %}
         <p><a href="{% url 'login' %}">Login to add listings</a></p>
     {% endif %}
 </body>
