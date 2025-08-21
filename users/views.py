@@ -53,7 +53,9 @@ def login_view(request):
     return render(request, "registration/login.html", {"form": form})
 
 def logout_view(request):
-    logout(request)
+    if request.method == "POST":   # only allow POST
+        logout(request)
+        return redirect("home")
     return redirect("home")
 
 @login_required

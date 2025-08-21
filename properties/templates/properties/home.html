@@ -1,32 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>House Marketplace</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>All Listings</h1>
 
     {% if listings %}
-        <ul>
-            {% for listing in listings %}
-                <li>
-                    <strong>{{ listing.title }}</strong> - {{ listing.price }} USD
-                    <br>
-                    Type: {{ listing.listing_type }}
-                    <br>
-                    Seller: <a href="{% url 'seller_profile' listing.seller.id %}">{{ listing.seller.username }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <ul>
+      {% for listing in listings %}
+      <li>
+        <strong>{{ listing.title }}</strong> - {{ listing.price }} USD
+        <br />
+        Type: {{ listing.listing_type }}
+        <br />
+        Seller:
+        <a href="{% url 'seller_profile' listing.seller.id %}">
+          {{ listing.seller.username }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
     {% else %}
-        <p>No listings yet.</p>
+    <p>No listings yet.</p>
     {% endif %}
 
     <!-- Add Listing Button: only for logged-in sellers (agents) -->
     {% if user.is_authenticated and user.is_agent %}
-        <a href="{% url 'add_listing' %}">Add New Listing</a>
+    <a href="{% url 'add_listing' %}">Add New Listing</a>
     {% elif not user.is_authenticated %}
-        <p><a href="{% url 'login' %}">Login to add listings</a></p>
+    <p>
+      Login as 
+      <a href="{% url 'login' %}">Seller</a> | 
+      <a href="{% url 'login' %}">Buyer</a>
+      <br />
+      Or Sign up as 
+      <a href="{% url 'seller_signup' %}">Seller</a> | 
+      <a href="{% url 'buyer_signup' %}">Buyer</a>
+    </p>
     {% endif %}
-</body>
+
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'logout' %}" style="display: inline">
+      {% csrf_token %}
+      <button
+        type="submit"
+        style="background: none; border: none; color: blue; cursor: pointer"
+      >
+        Logout
+      </button>
+    </form>
+    {% endif %}
+  </body>
 </html>
