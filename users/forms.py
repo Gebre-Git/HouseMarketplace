@@ -8,24 +8,37 @@ User = get_user_model()
 class SellerSignUpForm(UserCreationForm):
     first_name = forms.CharField(label="Name", max_length=150, required=True)
     email = forms.EmailField(required=True)
+    phone_number = forms.CharField(max_length=15, required=False)
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "first_name", "email", "phone_number")  # password fields come from UserCreationForm
+        fields = ("username", "first_name", "email", "phone_number", "password1", "password2")
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        # map Name -> first_name field
         user.first_name = self.cleaned_data["first_name"]
         user.email = self.cleaned_data["email"]
+        # mark this account as seller
+        user.is_seller = True
+        user.is_buyer = False
         if commit:
             user.save()
         return user
     
+
 class BuyerSignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
     phone_number = forms.CharField(max_length=15, required=False)
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'phone_number', 'password1', 'password2')    
+        fields = ("username", "email", "phone_number", "password1", "password2")
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        # mark this account as buyer
+        user.is_buyer = True
+        user.is_seller = False
+        if commit:
+            user.save()
+        return user

@@ -8,7 +8,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('', include('properties.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),  # <-- added this
     path('accounts/', include('users.urls')),      
 ]
 

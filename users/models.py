@@ -2,9 +2,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class CustomUser(AbstractUser):
-    # Extra fields for your marketplace
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    is_agent = models.BooleanField(default=False)  # if user is a property agent
+    is_seller = models.BooleanField(default=False)
+    is_buyer = models.BooleanField(default=False)
     profile_image = models.ImageField(upload_to='profiles/', blank=True, null=True)
 
     def __str__(self):

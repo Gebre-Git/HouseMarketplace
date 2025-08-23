@@ -10,13 +10,15 @@ from django.contrib.auth.decorators import login_required
 from .forms import SellerSignUpForm, BuyerSignUpForm
 
 
-# Existing seller signup
 def seller_signup(request):
     if request.method == "POST":
         form = SellerSignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # log them in right away
+            user = form.save(commit=False)
+            user.is_seller = True   # ✅ mark role
+            user.is_buyer = False
+            user.save()
+            login(request, user)
             return redirect("home")
     else:
         form = SellerSignUpForm()
@@ -34,23 +36,39 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, "registration/register.html", {"form": form})
 
-def login_view(request):
+# Seller login
+def seller_login(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Only allow users who are sellers and NOT buyers
+            if user.is_seller and not user.is_buyer:
+                login(request, user)
+                return redirect("seller_profile", seller_id=user.id)
+            else:
+                messages.error(request, "This account is not a seller.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    return render(request, "users/seller_login.html")
+
+# Buyer login
+def buyer_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Only allow users who are buyers and NOT sellers
+            if user.is_buyer and not user.is_seller:
                 login(request, user)
                 return redirect("home")
             else:
-                messages.error(request, "Invalid username or password.")
+                messages.error(request, "This account is not a buyer.")
         else:
             messages.error(request, "Invalid username or password.")
-    else:
-        form = AuthenticationForm()
-    return render(request, "registration/login.html", {"form": form})
+    return render(request, "users/buyer_login.html")
 
 def logout_view(request):
     if request.method == "POST":   # only allow POST
@@ -69,13 +87,15 @@ def buyer_signup(request):
     if request.method == "POST":
         form = BuyerSignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # automatically log them in
+            user = form.save(commit=False)
+            user.is_buyer = True   # ✅ mark role
+            user.is_seller = False
+            user.save()
+            login(request, user)
             return redirect("home")
     else:
         form = BuyerSignUpForm()
     return render(request, "users/buyer_signup.html", {"form": form})
-
 
 
 
