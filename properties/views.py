@@ -108,3 +108,10 @@ def seller_required(view_func):
         else:
             return redirect('login')
     return wrapper
+
+@login_required
+def my_listings(request):
+    if not request.user.is_seller:
+        return redirect('home')
+    listings = Listing.objects.filter(seller=request.user)
+    return render(request, 'properties/my_listings.html', {'listings': listings})

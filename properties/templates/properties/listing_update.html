@@ -1,15 +1,15 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="container mt-4">
-    <h2>Edit Listing</h2>
-
-    <form method="post" enctype="multipart/form-data" class="mt-3">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Listing</title>
+</head>
+<body>
+    <h1>Edit Listing</h1>
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{% url 'listing_detail' listing.id %}" class="btn btn-secondary">Cancel</a>
+        <button type="submit">Save Changes</button>
     </form>
-</div>
-{% endblock %}
+    <a href="{% url 'listing_detail' listing.id %}">Cancel</a>
+</body>
+</html>

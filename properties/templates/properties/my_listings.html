@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Listings</title>
+</head>
+<body>
+    <h1>My Listings</h1>
+
+    {% if listings %}
+    <ul>
+        {% for listing in listings %}
+        <li>
+            <strong><a href="{% url 'listing_detail' listing.id %}">{{ listing.title }}</a></strong> - {{ listing.price }} USD
+            <br />
+            Type: {{ listing.listing_type }}
+            <br />
+            <a href="{% url 'listing_update' listing.id %}">Edit</a>
+            <a href="{% url 'listing_delete' listing.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>You have no listings yet.</p>
+    {% endif %}
+
+    <a href="{% url 'add_listing' %}">Add New Listing</a>
+    <br>
+    <a href="{% url 'home' %}">Back to all listings</a>
+</body>
+</html>

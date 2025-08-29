@@ -14,6 +14,7 @@ urlpatterns = [
     path('listings/<int:listing_id>/', views.listing_detail, name='listing_detail'),
     path('listings/<int:listing_id>/update/', views.listing_update, name='listing_update'),
     path('listings/<int:listing_id>/delete/', views.listing_delete, name='listing_delete'),
+    path('my-listings/', views.my_listings, name='my_listings'),
 
     # -----------------------------
     # AUTH VIEWS

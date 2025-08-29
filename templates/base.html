@@ -1,16 +1,23 @@
-<nav>
-    <a href="{% url 'home' %}">Home</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House Marketplace</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
 
-    {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
         {% if user.is_seller %}
             <!-- Seller-specific links -->
             <a href="{% url 'add_listing' %}">Add Listing</a>
+            <a href="{% url 'my_listings' %}">My Listings</a>
             <a href="{% url 'seller_profile' seller_id=user.id %}">My Profile</a>
         {% elif user.is_buyer %}
             <!-- Buyer-specific links -->
             <a href="{% url 'home' %}">Browse Listings</a>
             <!-- Optional: Add a buyer profile page if implemented -->
-            <!-- <a href="{% url 'buyer_profile' %}">My Profile</a> -->
+            {# <a href="{% url 'buyer_profile' %}">My Profile</a> #}
         {% endif %}
 
         <!-- Logout button -->
@@ -26,4 +33,13 @@
         <a href="{% url 'buyer_signup' %}">Buyer Signup</a>
         <a href="{% url 'seller_signup' %}">Seller Signup</a>
     {% endif %}
-</nav>
+    </nav>
+
+    <hr>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>

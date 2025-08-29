@@ -1,14 +1,14 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="container mt-4">
-    <h2>Delete Listing</h2>
-    <p>Are you sure you want to delete <strong>{{ listing.title }}</strong>?</p>
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Listing</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete "{{ listing.title }}"?</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Yes, Delete</button>
-        <a href="{% url 'listing_detail' listing.id %}" class="btn btn-secondary">Cancel</a>
+        <button type="submit">Yes, delete</button>
     </form>
-</div>
-{% endblock %}
+    <a href="{% url 'listing_detail' listing.id %}">No, cancel</a>
+</body>
+</html>

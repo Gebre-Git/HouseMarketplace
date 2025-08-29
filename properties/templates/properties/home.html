@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>House Marketplace</title>
-  </head>
-  <body>
-    <h1>All Listings</h1>
+{% extends 'base.html' %}
 
-    {% block content %}
-    {% endblock %}
+{% block content %}
+    <h1>All Listings</h1>
 
     {% if listings %}
     <ul>
       {% for listing in listings %}
       <li>
-        <strong>{{ listing.title }}</strong> - {{ listing.price }} USD
+        <strong><a href="{% url 'listing_detail' listing.id %}">{{ listing.title }}</a></strong> - {{ listing.price }} USD
         <br />
         Type: {{ listing.listing_type }}
         <br />
@@ -52,5 +46,4 @@
       </button>
     </form>
     {% endif %}
-  </body>
-</html>
+{% endblock %}
