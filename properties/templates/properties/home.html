@@ -1,49 +1,161 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>All Listings</h1>
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="{% url 'home' %}" class="text-2xl font-bold text-gray-800">House Marketplace</a>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="text-gray-600 hover:text-gray-800">Buy</a>
+            <a href="#" class="text-gray-600 hover:text-gray-800">Rent</a>
+            <a href="#" class="text-gray-600 hover:text-gray-800">Sell</a>
+            <a href="{% url 'my_listings' %}" class="text-gray-600 hover:text-gray-800">My Listings</a>
+            <a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-800">Login</a>
+            <a href="{% url 'register' %}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Signup</a>
+        </div>
+    </nav>
+</header>
 
-    {% if listings %}
-    <ul>
-      {% for listing in listings %}
-      <li>
-        <strong><a href="{% url 'listing_detail' listing.id %}">{{ listing.title }}</a></strong> - {{ listing.price }} USD
-        <br />
-        Type: {{ listing.listing_type }}
-        <br />
-        Seller:
-        <a href="{% url 'seller_profile' listing.seller.id %}">
-          {{ listing.seller.username }}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <p>No listings yet.</p>
-    {% endif %}
+<main>
+    <section class="relative h-screen bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1920&q=80');">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-white">
+            <h1 class="text-5xl font-bold mb-4">Find Your Dream Home</h1>
+            <div class="w-full max-w-3xl bg-white p-4 rounded-lg shadow-lg">
+                <form class="flex items-center space-x-2">
+                    <input type="text" placeholder="Location" class="w-full px-4 py-2 border rounded-lg text-gray-800">
+                    <select class="px-4 py-2 border rounded-lg text-gray-800">
+                        <option>Property Type</option>
+                        <option>House</option>
+                        <option>Apartment</option>
+                        <option>Land</option>
+                    </select>
+                    <input type="text" placeholder="Price Range" class="px-4 py-2 border rounded-lg text-gray-800">
+                    <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Search</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-    <!-- Add Listing Button: only for logged-in sellers (agents) -->
-    {% if user.is_authenticated and user.is_seller %}
-    <a href="{% url 'add_listing' %}">Add New Listing</a>
-    {% elif not user.is_authenticated %}
-    <p>
-      Login as
-      <a href="{% url 'seller_login' %}">Seller</a> |
-      <a href="{% url 'buyer_login' %}">Buyer</a>
-      <br />
-      Or Sign up as
-      <a href="{% url 'seller_signup' %}">Seller</a> |
-      <a href="{% url 'buyer_signup' %}">Buyer</a>
-    </p>
-    {% endif %} {% if user.is_authenticated %}
-    <form method="post" action="{% url 'logout' %}" style="display: inline">
-      {% csrf_token %}
-      <button
-        type="submit"
-        style="background: none; border: none; color: blue; cursor: pointer"
-      >
-        Logout
-      </button>
-    </form>
-    {% endif %}
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">Featured Listings</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for listing in listings %}
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    {% if listing.image %}
+                    <img src="{{ listing.image.url }}" alt="{{ listing.title }}" class="w-full h-56 object-cover">
+                    {% endif %}
+                    <div class="p-6">
+                        <p class="text-xl font-bold text-gray-800">${{ listing.price }}</p>
+                        <p class="text-gray-600">{{ listing.location }}</p>
+                        <div class="flex items-center mt-4 text-gray-600">
+                            <span class="mr-4"><i class="fas fa-bed mr-2"></i>{{ listing.bedrooms }}</span>
+                            <span class="mr-4"><i class="fas fa-bath mr-2"></i>{{ listing.size_sq_meters }}</span>
+                        </div>
+                        <a href="{% url 'listing_detail' listing.id %}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">View Details</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-8">Explore by Category</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="relative rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-40"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="text-white text-2xl font-bold">Houses for Sale</h3>
+                    </div>
+                </div>
+                <div class="relative rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-40"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="text-white text-2xl font-bold">Houses for Rent</h3>
+                    </div>
+                </div>
+                <div class="relative rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-40"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="text-white text-2xl font-bold">Apartments</h3>
+                    </div>
+                </div>
+                <div class="relative rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-40"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h3 class="text-white text-2xl font-bold">Lands</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-8">Why Choose Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-home text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold">500+ Listings</h3>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold">Trusted Agents</h3>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-search text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold">Fast Search</h3>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-shield-alt text-4xl text-blue-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold">Secure Deals</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-blue-500 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-4">Want to sell your property?</h2>
+            <p class="mb-8">List your house today!</p>
+            <a href="#" class="bg-white text-blue-500 px-6 py-3 rounded-full font-bold hover:bg-gray-200">Post Your Listing</a>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-lg font-bold mb-4">About Us</h3>
+                <p class="text-gray-400">Your partner in finding the perfect home.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                <ul>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Buy</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Rent</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">Sell</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            &copy; 2025 House Marketplace. All rights reserved.
+        </div>
+    </div>
+</footer>
 {% endblock %}

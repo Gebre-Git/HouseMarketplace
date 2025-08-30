@@ -2,44 +2,13 @@
 <html>
 <head>
     <title>House Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body>
-    <nav>
-        <a href="{% url 'home' %}">Home</a>
-
-        {% if user.is_authenticated %}
-        {% if user.is_seller %}
-            <!-- Seller-specific links -->
-            <a href="{% url 'add_listing' %}">Add Listing</a>
-            <a href="{% url 'my_listings' %}">My Listings</a>
-            <a href="{% url 'seller_profile' seller_id=user.id %}">My Profile</a>
-        {% elif user.is_buyer %}
-            <!-- Buyer-specific links -->
-            <a href="{% url 'home' %}">Browse Listings</a>
-            <!-- Optional: Add a buyer profile page if implemented -->
-            {# <a href="{% url 'buyer_profile' %}">My Profile</a> #}
-        {% endif %}
-
-        <!-- Logout button -->
-        <form action="{% url 'logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-
-    {% else %}
-        <!-- Links for unauthenticated users -->
-        <a href="{% url 'buyer_login' %}">Buyer Login</a>
-        <a href="{% url 'seller_login' %}">Seller Login</a>
-        <a href="{% url 'buyer_signup' %}">Buyer Signup</a>
-        <a href="{% url 'seller_signup' %}">Seller Signup</a>
-    {% endif %}
-    </nav>
-
-    <hr>
-
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+<body class="bg-gray-100 font-sans">
+    {% block content %}
+    {% endblock %}
+</body>
 
 </body>
+</html>
