@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-6 py-16 text-center">
+    <h1 class="text-3xl font-bold text-gray-800">Please log in to view listing details.</h1>
+    <div class="mt-8">
+        <a href="{% url 'seller_login' %}" class="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600">Login as Seller</a>
+        <a href="{% url 'buyer_login' %}" class="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600">Login as Buyer</a>
+    </div>
+</div>
+{% endblock %}

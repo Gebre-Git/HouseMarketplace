@@ -32,6 +32,8 @@ def add_listing(request):
 # LISTING DETAIL
 # -----------------------------
 def listing_detail(request, listing_id):
+    if not request.user.is_authenticated:
+        return render(request, 'properties/login_required.html')
     listing = get_object_or_404(Listing, id=listing_id)
     return render(request, "properties/listing_detail.html", {"listing": listing})
 

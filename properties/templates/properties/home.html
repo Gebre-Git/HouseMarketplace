@@ -5,12 +5,11 @@
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
         <a href="{% url 'home' %}" class="text-2xl font-bold text-gray-800">House Marketplace</a>
         <div class="flex items-center space-x-4">
-            <a href="#" class="text-gray-600 hover:text-gray-800">Buy</a>
-            <a href="#" class="text-gray-600 hover:text-gray-800">Rent</a>
-            <a href="#" class="text-gray-600 hover:text-gray-800">Sell</a>
             <a href="{% url 'my_listings' %}" class="text-gray-600 hover:text-gray-800">My Listings</a>
-            <a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-800">Login</a>
-            <a href="{% url 'register' %}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Signup</a>
+            <a href="{% url 'seller_login' %}" class="text-gray-600 hover:text-gray-800">Login as Seller</a>
+            <a href="{% url 'buyer_login' %}" class="text-gray-600 hover:text-gray-800">Login as Buyer</a>
+            <a href="{% url 'seller_signup' %}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Signup as Seller</a>
+            <a href="{% url 'buyer_signup' %}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">Signup as Buyer</a>
         </div>
     </nav>
 </header>
@@ -60,73 +59,7 @@
         </div>
     </section>
 
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-8">Explore by Category</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="relative rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
-                    <div class="absolute inset-0 bg-black opacity-40"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <h3 class="text-white text-2xl font-bold">Houses for Sale</h3>
-                    </div>
-                </div>
-                <div class="relative rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
-                    <div class="absolute inset-0 bg-black opacity-40"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <h3 class="text-white text-2xl font-bold">Houses for Rent</h3>
-                    </div>
-                </div>
-                <div class="relative rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
-                    <div class="absolute inset-0 bg-black opacity-40"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <h3 class="text-white text-2xl font-bold">Apartments</h3>
-                    </div>
-                </div>
-                <div class="relative rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=60" class="w-full h-64 object-cover">
-                    <div class="absolute inset-0 bg-black opacity-40"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <h3 class="text-white text-2xl font-bold">Lands</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-8">Why Choose Us</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-home text-4xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-semibold">500+ Listings</h3>
-                </div>
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-semibold">Trusted Agents</h3>
-                </div>
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-search text-4xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-semibold">Fast Search</h3>
-                </div>
-                <div class="flex flex-col items-center">
-                    <i class="fas fa-shield-alt text-4xl text-blue-500 mb-4"></i>
-                    <h3 class="text-xl font-semibold">Secure Deals</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 bg-blue-500 text-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-4">Want to sell your property?</h2>
-            <p class="mb-8">List your house today!</p>
-            <a href="#" class="bg-white text-blue-500 px-6 py-3 rounded-full font-bold hover:bg-gray-200">Post Your Listing</a>
-        </div>
-    </section>
+>>>>>>>
 </main>
 
 <footer class="bg-gray-800 text-white py-8">
@@ -139,9 +72,7 @@
             <div>
                 <h3 class="text-lg font-bold mb-4">Quick Links</h3>
                 <ul>
-                    <li><a href="#" class="text-gray-400 hover:text-white">Buy</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white">Rent</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-white">Sell</a></li>
+                    <li><a href="{% url 'my_listings' %}" class="text-gray-400 hover:text-white">My Listings</a></li>
                 </ul>
             </div>
             <div>
