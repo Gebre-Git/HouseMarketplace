@@ -10,6 +10,7 @@ class Listing(models.Model):
     description = models.TextField(blank=True, null=True)  # optional
     listing_type = models.CharField(max_length=10, choices=[('rent', 'Rent'), ('sell', 'Sell')])
     bedrooms = models.IntegerField()
+    bathrooms = models.IntegerField()
     size_sq_meters = models.FloatField()
     price = models.FloatField()
     location = models.CharField(max_length=255)  # detailed address or landmark

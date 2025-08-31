@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -147,4 +148,3 @@ LOGOUT_REDIRECT_URL = 'home'
 
 # house_marketplace/settings.py
 LOGIN_URL = 'login'
-

@@ -1,14 +1,135 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Seller Signup</title>
-</head>
-<body>
-    <h2>Seller Signup</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f4f8;
+        padding: 2rem;
+    }
+    .form-card {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 400px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+    .form-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #1a202c;
+    }
+    .input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.5rem;
+        transition: border-color 0.3s ease;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #4a90e2;
+    }
+    .form-label {
+        position: absolute;
+        left: 1rem;
+        top: 0.75rem;
+        color: #a0aec0;
+        pointer-events: none;
+        transition: all 0.2s ease;
+    }
+    .form-input:focus + .form-label,
+    .form-input:not(:placeholder-shown) + .form-label {
+        top: -0.75rem;
+        left: 0.75rem;
+        font-size: 0.75rem;
+        color: #4a90e2;
+        background-color: white;
+        padding: 0 0.25rem;
+    }
+    .submit-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(to right, #4a90e2, #5468ff);
+        color: white;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(74, 144, 226, 0.5);
+    }
+    .form-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #718096;
+    }
+    .form-link a {
+        color: #4a90e2;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .form-link a:hover {
+        color: #5468ff;
+    }
+    .error-message {
+        color: #e53e3e;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-card">
+        <h2 class="form-title">Seller Signup</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="input-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+
+        <p class="form-link">Already have an account? <a href="{% url 'seller_login' %}">Login as Seller</a></p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const formFields = document.querySelectorAll('.input-group input, .input-group select, .input-group textarea');
+        formFields.forEach(function(field) {
+            const label = field.previousElementSibling;
+            if (label && label.tagName === 'LABEL') {
+                field.classList.add('form-input');
+                label.classList.add('form-label');
+                if (field.value) {
+                    field.setAttribute('placeholder', ' ');
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

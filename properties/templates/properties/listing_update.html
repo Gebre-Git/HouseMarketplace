@@ -1,15 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Listing</title>
-</head>
-<body>
-    <h1>Edit Listing</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
-    <a href="{% url 'listing_detail' listing.id %}">Cancel</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="bg-gray-50 py-16">
+    <div class="container mx-auto px-6">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Edit Listing</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="space-y-6">
+                    {{ form.as_p }}
+                </div>
+                <div class="mt-8 text-center">
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600 transition-transform duration-300 transform hover:scale-105">
+                        Save Changes
+                    </button>
+                    <a href="{% url 'listing_detail' listing.id %}" class="ml-4 text-gray-600 hover:text-gray-800">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

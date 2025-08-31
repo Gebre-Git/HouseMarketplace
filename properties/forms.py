@@ -9,6 +9,7 @@ class ListingForm(forms.ModelForm):
             "description",
             "listing_type",
             "bedrooms",
+            "bathrooms",
             "size_sq_meters",
             "price",
             "location",

@@ -1,19 +1,125 @@
-{% extends "properties/home.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-<h2>Seller Login</h2>
-<form method="post" action="{% url 'seller_login' %}">
-    {% csrf_token %}
-    <label for="username">Username:</label>
-    <input type="text" name="username" required>
-    <br>
+<style>
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0f4f8;
+        padding: 2rem;
+    }
+    .form-card {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        width: 100%;
+        max-width: 400px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+    .form-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #1a202c;
+    }
+    .input-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #cbd5e0;
+        border-radius: 0.5rem;
+        transition: border-color 0.3s ease;
+    }
+    .form-input:focus {
+        outline: none;
+        border-color: #4a90e2;
+    }
+    .form-label {
+        position: absolute;
+        left: 1rem;
+        top: 0.75rem;
+        color: #a0aec0;
+        pointer-events: none;
+        transition: all 0.2s ease;
+    }
+    .form-input:focus + .form-label,
+    .form-input:not(:placeholder-shown) + .form-label {
+        top: -0.75rem;
+        left: 0.75rem;
+        font-size: 0.75rem;
+        color: #4a90e2;
+        background-color: white;
+        padding: 0 0.25rem;
+    }
+    .submit-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(to right, #4a90e2, #5468ff);
+        color: white;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -5px rgba(74, 144, 226, 0.5);
+    }
+    .form-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #718096;
+    }
+    .form-link a {
+        color: #4a90e2;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .form-link a:hover {
+        color: #5468ff;
+    }
+    .error-message {
+        color: #e53e3e;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+        text-align: center;
+    }
+</style>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" required>
-    <br>
+<div class="form-container">
+    <div class="form-card">
+        <h2 class="form-title">Seller Login</h2>
+        
+        {% if form.errors %}
+            <p class="error-message">Your username and password didn't match. Please try again.</p>
+        {% endif %}
 
-    <button type="submit">Login as Seller</button>
-</form>
+        <form method="post" action="{% url 'seller_login' %}">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="username" id="username" class="form-input" placeholder=" " required>
+                <label for="username" class="form-label">Username</label>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" id="password" class="form-input" placeholder=" " required>
+                <label for="password" class="form-label">Password</label>
+            </div>
+            <button type="submit" class="submit-btn">Login as Seller</button>
+        </form>
 
-<p>Not a seller yet? <a href="{% url 'seller_signup' %}">Sign up as Seller</a></p>
+        <p class="form-link">Not a seller yet? <a href="{% url 'seller_signup' %}">Sign up as Seller</a></p>
+    </div>
+</div>
 {% endblock %}

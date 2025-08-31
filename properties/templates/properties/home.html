@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block content %}
 <header class="bg-white shadow-md sticky top-0 z-50">
@@ -45,11 +46,11 @@
                     <img src="{{ listing.image.url }}" alt="{{ listing.title }}" class="w-full h-56 object-cover">
                     {% endif %}
                     <div class="p-6">
-                        <p class="text-xl font-bold text-gray-800">${{ listing.price }}</p>
+                        <p class="text-xl font-bold text-gray-800">{{ listing.price|intcomma }} Birr</p>
                         <p class="text-gray-600">{{ listing.location }}</p>
                         <div class="flex items-center mt-4 text-gray-600">
-                            <span class="mr-4"><i class="fas fa-bed mr-2"></i>{{ listing.bedrooms }}</span>
-                            <span class="mr-4"><i class="fas fa-bath mr-2"></i>{{ listing.size_sq_meters }}</span>
+                            <span class="mr-4"><i class="fas fa-bed mr-2 text-blue-400 mb-2"></i>{{ listing.bedrooms }}</span>
+                            <span class="mr-4"><i class="fa fa-ruler-combined text-blue-400 mb-2"></i>{{ listing.size_sq_meters }}</span>
                         </div>
                         <a href="{% url 'listing_detail' listing.id %}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600">View Details</a>
                     </div>
